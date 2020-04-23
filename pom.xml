@@ -19,6 +19,7 @@
         <module>yqyj-common</module>
         <module>yqyj-admin</module>
         <module>yqyj-web</module>
+        <module>yqyj-wx</module>
     </modules>
 
     <properties>

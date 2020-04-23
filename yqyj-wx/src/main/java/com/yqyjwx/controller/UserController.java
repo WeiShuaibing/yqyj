@@ -73,7 +73,7 @@ public class UserController {
     @PostMapping("/login")
     public R login(@RequestBody User user){
         QueryWrapper<User> query = Wrappers.<User>query();
-        query.eq("user_phone", user.getUserPhone());
+        query.eq("user_phone", user.getUserPhone()).eq("user_state", 0);
         User one = userService.getOne(query);
         if (one.getUserPassword().equals(user.getUserPassword())){
             // 登录成功，重新保存此对象，更新update_date的数据

@@ -1,6 +1,8 @@
 package com.yqyjadmin.controller;
 
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yqyjadmin.service.UserService;
 import com.yqyjcommon.entity.User;
 import com.yqyjcommon.pojo.MyPage;
@@ -18,9 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    /**
-     * 新增酒店
-     */
+
     @PostMapping("/add")
     public R add(@RequestBody User user){
         System.out.println(user);
@@ -29,9 +29,7 @@ public class UserController {
         else return new R(20001,"服务异常，添加失败！！！");
     }
 
-    /**
-     * 更新酒店信息
-     */
+
     @PostMapping("/update")
     public R update(@RequestBody User user){
         boolean b = userService.updateById(user);
@@ -39,9 +37,7 @@ public class UserController {
         else return new R(20001,"服务异常，更新失败！！！");
     }
 
-    /**
-     * 删除酒店
-     */
+
     @GetMapping("/delete")
     public R delete(int id){
         boolean b = userService.removeById(id);
@@ -49,9 +45,6 @@ public class UserController {
         else return new R(20001,"服务异常，删除失败！！！");
     }
 
-    /**
-     * 模糊查询酒店
-     */
     @GetMapping("/search")
     public R serach(String str,int pageNum,int pageSize){
 //        MyPage<User> search = userService.search(str, pageNum, pageSize);
@@ -73,9 +66,9 @@ public class UserController {
      */
     @GetMapping("/getList")
     public R getList(int pageNum,int pageSize){
-//        MyPage<User> pageGuides = userService.getPageusers(pageNum, pageSize);
-//        return new R(pageGuides);
-        return null;
+        Page<User> userPage = new Page<>(pageNum, pageSize);
+        Page<User> page = userService.page(userPage, Wrappers.<User>query().orderByDesc("id"));
+        return new R(page);
     }
 
 }
